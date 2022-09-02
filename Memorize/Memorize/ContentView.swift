@@ -9,13 +9,15 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        // the body is calculated by running or executing the function
-        Text("Hello CS193!") // Text is just a struct that behavis like a view.
-            .foregroundColor(.orange)
-            .padding()
+        ZStack{
+            RoundedRectangle(cornerRadius: 20)
+                .stroke(lineWidth: 3)
+            Text("some text")
+            
+        }
+        .padding(.horizontal)
+        .foregroundColor(.orange)
     }
-    
-    
 }
 
 
