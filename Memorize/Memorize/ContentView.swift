@@ -104,25 +104,10 @@ struct CardView : View {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .previewInterfaceOrientation(.landscapeLeft)
+            .previewInterfaceOrientation(.portrait)
         ContentView()
             .preferredColorScheme(.dark)
     }
