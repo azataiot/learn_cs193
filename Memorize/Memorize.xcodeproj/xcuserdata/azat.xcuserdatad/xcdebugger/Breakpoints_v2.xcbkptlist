@@ -7,8 +7,8 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C59D88BC-D8A8-4EE6-9EE0-B431F0B9DF78"
-            shouldBeEnabled = "Yes"
+            uuid = "9A388D28-DA88-496B-BA34-697E89136945"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Memorize/ContentView.swift"
