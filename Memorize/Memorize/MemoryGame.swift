@@ -55,5 +55,4 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         var isMatched: Bool = false
         var content: CardContent
     }
-
 }

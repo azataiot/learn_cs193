@@ -13,9 +13,11 @@ struct ContentView: View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
                 ForEach(viewModel.cards) { card in
+                    // bag of lego view!
                     CardView(card: card)
                             .aspectRatio(2 / 3, contentMode: .fit)
                             .onTapGesture {
+                                // ask VM to express User intent
                                 viewModel.choose(card)
                             }
                 }
@@ -23,9 +25,18 @@ struct ContentView: View {
         }
                 .foregroundColor(.red)
                 .padding(.horizontal)
+        Spacer()
+        Button(action: {
+            viewModel.shuffleTheme()
+        }, label: {
+            Text("New Game")
+        })
+                .padding()
     }
 }
 
+
+// View that shows what the card looks like
 
 struct CardView: View {
     let card: MemoryGame<String>.Card
@@ -38,6 +49,7 @@ struct CardView: View {
                 shape.strokeBorder(lineWidth: 3)
                 Text(card.content).font(.largeTitle)
             } else if card.isMatched {
+
                 shape.opacity(0)
             } else {
                 shape.fill()
