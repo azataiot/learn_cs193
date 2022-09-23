@@ -13,29 +13,9 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     // in our game, we need a bunch of cards
     private(set) var cards: Array<Card>
     private var indexOfTheOnlyFaceUpCard: Int?{
-        get {
-            var faceUpCardIndices = [Int]()
-            for index in cards.indices {
-                if cards[index].isFaceUp {
-                    faceUpCardIndices.append(index)
-                }
-            }
-            if faceUpCardIndices.count == 1 {
-                return faceUpCardIndices.first
-            } else {
-                return nil
-            }
-        }
-        set {
-            for index in cards.indices {
-                // all other cards except the new opened one face down
-                if index != newValue {
-                    cards[index].isFaceUp = false
-                } else {
-                    cards[index].isFaceUp = true
-                }
-            }
-        }
+        get { cards.indices.filter({cards[$0].isFaceUp}).oneAndOnly }
+        set { cards.indices.forEach { cards[$0].isFaceUp = ($0 == newValue) }}
+        // all other cards except the new opened one face down
     }
     
     
@@ -76,4 +56,17 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         var content: CardContent
     }
     
+}
+
+
+
+extension Array {
+    // Array's dont care is called Element
+    var oneAndOnly:Element? {   // we want one and only, if only return it else return nil
+        if self.count == 1 {
+            return self.first
+        } else {
+            return nil
+        }
+    }
 }
