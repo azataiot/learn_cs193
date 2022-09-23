@@ -12,7 +12,19 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     // Memorize Game's state and controller.
     // in our game, we need a bunch of cards
     private(set) var cards: Array<Card>
-    private var indexOfTheOnlyFaceUpCard: Int?
+    private var indexOfTheOnlyFaceUpCard: Int? {
+        var faceUpCardIndices = [Int]()
+        for index in cards.indices {
+            if cards[index].isFaceUp {
+                faceUpCardIndices.append(index)
+            }
+        }
+        if faceUpCardIndices.count == 1 {
+            return faceUpCardIndices.first
+        } else {
+            return nil
+        }
+    }
     
     // this func chooose can not be private because we want to expose it
     // internal is the default and it means we can use it anywhere inside the app.
