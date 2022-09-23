@@ -12,19 +12,32 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     // Memorize Game's state and controller.
     // in our game, we need a bunch of cards
     private(set) var cards: Array<Card>
-    private var indexOfTheOnlyFaceUpCard: Int? {
-        var faceUpCardIndices = [Int]()
-        for index in cards.indices {
-            if cards[index].isFaceUp {
-                faceUpCardIndices.append(index)
+    private var indexOfTheOnlyFaceUpCard: Int?{
+        get {
+            var faceUpCardIndices = [Int]()
+            for index in cards.indices {
+                if cards[index].isFaceUp {
+                    faceUpCardIndices.append(index)
+                }
+            }
+            if faceUpCardIndices.count == 1 {
+                return faceUpCardIndices.first
+            } else {
+                return nil
             }
         }
-        if faceUpCardIndices.count == 1 {
-            return faceUpCardIndices.first
-        } else {
-            return nil
+        set {
+            for index in cards.indices {
+                // all other cards except the new opened one face down
+                if index != newValue {
+                    cards[index].isFaceUp = false
+                } else {
+                    cards[index].isFaceUp = true
+                }
+            }
         }
     }
+    
     
     // this func chooose can not be private because we want to expose it
     // internal is the default and it means we can use it anywhere inside the app.
@@ -38,14 +51,10 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                     cards[chosenIndex].isMatched = true
                     cards[potentialMatchIndex].isMatched = true
                 }
-                indexOfTheOnlyFaceUpCard = nil
+                cards[chosenIndex].isFaceUp = true
             } else {
-                for index in cards.indices {
-                    cards[index].isFaceUp = false
-                }
                 indexOfTheOnlyFaceUpCard = chosenIndex
             }
-            cards[chosenIndex].isFaceUp.toggle()
         }
         
     }
