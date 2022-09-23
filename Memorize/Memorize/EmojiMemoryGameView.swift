@@ -1,5 +1,5 @@
-//
-//  ContentView.swift
+//  This is the main Game UI
+//  EmojiMemoryGameView.swift
 //  Memorize
 //
 //  Created by Azat Yaakov on 2.09.2022.
@@ -7,29 +7,30 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    @ObservedObject var viewModel: EmojiMemoryGame
+/// Entry point of the APP UI
+struct EmojiMemoryGameView: View {
+    @ObservedObject var game: EmojiMemoryGame
     var body: some View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
-                ForEach(viewModel.cards) { card in
+                ForEach(game.cards) { card in
                     CardView(card: card)
-                            .aspectRatio(2 / 3, contentMode: .fit)
-                            .onTapGesture {
-                                viewModel.choose(card)
-                            }
+                        .aspectRatio(2 / 3, contentMode: .fit)
+                        .onTapGesture {
+                            game.choose(card)
+                        }
                 }
             }
         }
-                .foregroundColor(.red)
-                .padding(.horizontal)
+        .foregroundColor(.red)
+        .padding(.horizontal)
     }
 }
 
 
 struct CardView: View {
-    let card: MemoryGame<String>.Card
-
+    let card: EmojiMemoryGame.Card
+    
     var body: some View {
         ZStack {
             let shape = RoundedRectangle(cornerRadius: 20)
@@ -43,19 +44,18 @@ struct CardView: View {
                 shape.fill()
             }
         }
-
+        
     }
-
+    
 }
 
 
-struct ContentView_Previews: PreviewProvider {
-
+struct EmojiMemoryGameView_Previews: PreviewProvider {
     static var previews: some View {
         let game = EmojiMemoryGame()
-        ContentView(viewModel: game)
-                .previewInterfaceOrientation(.portrait)
-        ContentView(viewModel: game)
-                .preferredColorScheme(.dark)
+        EmojiMemoryGameView(game: game)
+            .previewInterfaceOrientation(.portrait)
+        EmojiMemoryGameView(game: game)
+            .preferredColorScheme(.dark)
     }
 }

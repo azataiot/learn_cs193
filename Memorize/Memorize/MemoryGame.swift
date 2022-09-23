@@ -1,7 +1,7 @@
 //
 //  MemoryGame.swift
 //  Memorize
-//
+//  Model of The Game
 //  Created by Azat Yaakov on 5.09.2022.
 //
 
@@ -10,13 +10,13 @@ import Foundation
 
 struct MemoryGame<CardContent> where CardContent: Equatable {
     // Memorize Game's state and controller.
-
     // in our game, we need a bunch of cards
     private(set) var cards: Array<Card>
-
     private var indexOfTheOnlyFaceUpCard: Int?
-
-    mutating func choose(_ card: Card) {
+    
+    // this func chooose can not be private because we want to expose it
+    // internal is the default and it means we can use it anywhere inside the app.
+    internal mutating func choose(_ card: Card) {
         // all arguments to functions are lets
         if let chosenIndex = cards.firstIndex(where: { $0.id == card.id }),
            !cards[chosenIndex].isFaceUp,
@@ -35,11 +35,11 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
             }
             cards[chosenIndex].isFaceUp.toggle()
         }
-        print(cards)
+        
     }
-
+    
     init(numberOfPairsOfCards: Int, createCardContent: (Int) -> CardContent) {
-        cards = Array<Card>()
+        cards = []
         // add numberOfPairsOfCards x2 cards to cards array.
         for pairIndex in 0..<numberOfPairsOfCards {
             let content: CardContent = createCardContent(pairIndex)
@@ -47,13 +47,12 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
             cards.append(Card(id: pairIndex * 2 + 1, content: content))
         }
     }
-
+    
     struct Card: Identifiable {
         var id: Int
-
-        var isFaceUp: Bool = false
-        var isMatched: Bool = false
+        var isFaceUp = false
+        var isMatched = false
         var content: CardContent
     }
-
+    
 }
